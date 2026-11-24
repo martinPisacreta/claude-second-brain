@@ -55,4 +55,10 @@ hook backs that memory up before Auto Dream reorganizes it.
 Built and tested on 24 Nov 2026 in a real project (Windows 11, Claude Code, Obsidian 1.15). It is young: the
 honest measure is whether repeated mistakes go down over the next weeks. Issues and stories welcome.
 
+## Want it adapted to your repo?
+
+Fixed price, USD 50: I adapt the notes, the recall stopwords and the alert rules to ONE repository of yours, in
+writing, no calls, delivered within 48 h. Open an issue titled **Adaptation** with a line about your project and
+the language you work in; payment and delivery go through a freelance platform, never off-platform.
+
 Made by Martin Pisacreta, working with Claude Code. MIT license.
