@@ -33,9 +33,11 @@ STAGNATION = {
     'No real buyers': r'0 real buyers|0 compradores reales',
     'Zero income': r'no income|USD 0 de afuera|0 income',
 }
-CORRECTION = (r'\b(no(t| es| era| va| sirve)|wrong|that\'s not|why did|i told you|te dije|ya te|por qu[eé]|xq|'
-              r'manual|i won\'t|yo no voy|don\'t|no hagas|you should|deber[ií]as|are you sure|seguro\?|'
-              r'te parece bien|solo hay)')
+# Kept narrow on purpose: a loose «no»/«not» flags ordinary questions and instructions as corrections.
+CORRECTION = (r"(\bthat'?s (not|wrong)\b|\bwrong\b|\bwhy did you\b|\bi told you\b|\byou should have\b|\bare you sure\b|"
+              r"\bdidn'?t (work|do)\b|\bnot what i\b|\bno (es|era|sirve|anda|funciona)\b|est[aá] mal\b|\bno hiciste\b|"
+              r"\bte dije\b|\bya te dije\b|\bpor qu[eé] (no|hiciste)\b|\byo no voy a\b|\bdeber[ií]as\b|\bseguro\?|"
+              r"te parece bien|esto es manual)")
 CONFIRMATION = r'\b(perfect|great|exactly|that\'s it|love it|yes,? do|perfecto|genial|excelente|eso es|dale|joya)'
 
 
