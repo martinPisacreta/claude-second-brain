@@ -130,7 +130,9 @@ def start(data):
 
 # ---------- recall ----------
 STOP = {'about', 'after', 'before', 'there', 'their', 'which', 'would', 'could', 'should', 'please', 'claude',
-        'sobre', 'antes', 'despues', 'cuando', 'porque', 'desde', 'hasta', 'entre', 'tiene', 'hacer', 'puede'}
+        'from', 'this', 'that', 'what', 'when', 'have', 'your', 'with', 'make', 'more', 'just', 'like', 'some',
+        'sobre', 'antes', 'despues', 'cuando', 'porque', 'desde', 'hasta', 'entre', 'tiene', 'hacer', 'puede',
+        'como', 'para', 'esta', 'este', 'esto', 'pero', 'todo', 'cada', 'solo', 'bien', 'hace', 'algo', 'nada'}
 
 
 def roots(t):
@@ -153,7 +155,8 @@ def recall(data):
         if m:
             cands.append(('memory ' + f[:-3], m.group(1)))
     ranked = sorted(((len(words & roots(t)), src, t) for src, t in cands), reverse=True)
-    picked = [(s, t) for n, s, t in ranked[:3] if n >= 2]
+    minimum = 2 if len(words) < 25 else 4     # long prompts share many words with everything
+    picked = [(s, t) for n, s, t in ranked[:3] if n >= minimum]
     if picked:
         ctx = 'RECALL (lessons related to this request; apply them and count «helped» when you close):\n' + \
               '\n'.join('- [' + s + '] ' + short(t, 300) for s, t in picked)
