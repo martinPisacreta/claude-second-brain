@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [ { "type": "command", "command": "python .claude/hooks/brain.py start", "timeout": 20 } ] }
+    ],
+    "UserPromptSubmit": [
+      { "hooks": [ { "type": "command", "command": "python .claude/hooks/brain.py recall", "timeout": 15 } ] }
+    ],
+    "Stop": [
+      { "hooks": [ { "type": "command", "command": "python .claude/hooks/brain.py diary", "timeout": 20, "async": true } ] }
+    ],
+    "PostCompact": [
+      { "hooks": [ { "type": "command", "command": "python .claude/hooks/brain.py compact", "timeout": 20 } ] }
+    ]
+  }
+}
