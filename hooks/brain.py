@@ -170,7 +170,7 @@ def recall(data):
 
     ranked = sorted(((*score(ws), src, t) for src, t, ws in docs), key=lambda x: x[0], reverse=True)
     minimum = 2 if len(words) < 25 else 4     # long prompts share many words with everything
-    picked = [(s, t) for sc, n, s, t in ranked[:3] if n >= minimum and sc >= 1.2]
+    picked = [(s, t) for sc, n, s, t in ranked[:3] if n >= minimum and (n_docs < 50 or sc >= 1.2)]  # small vaults: too few notes for idf to mean much
     if picked:
         ctx = 'RECALL (lessons related to this request; apply them and count «helped» when you close):\n' + \
               '\n'.join('- [' + s + '] ' + short(t, 300) for s, t in picked)
