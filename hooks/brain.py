@@ -156,9 +156,21 @@ def recall(data):
         m = re.search(r'^description:\s*(.+)$', read(os.path.join(mem, f), 1500), re.M)
         if m:
             cands.append(('memory ' + f[:-3], m.group(1)))
-    ranked = sorted(((len(words & roots(t)), src, t) for src, t in cands), reverse=True)
+    # Rare words weigh more (idf) and long texts don't win just by being long. Plain overlap counting let long
+    # memory descriptions crowd out the numbered lessons, so their helped/failed counters never moved.
+    import math
+    from collections import Counter
+    docs = [(src, t, roots(t)) for src, t in cands]
+    df = Counter(w for _, _, ws in docs for w in ws)
+    n_docs = len(docs) or 1
+
+    def score(ws):
+        common = words & ws
+        return sum(math.log((n_docs + 1) / (df[w] + 1)) for w in common) / math.sqrt(max(len(ws), 8)), len(common)
+
+    ranked = sorted(((*score(ws), src, t) for src, t, ws in docs), key=lambda x: x[0], reverse=True)
     minimum = 2 if len(words) < 25 else 4     # long prompts share many words with everything
-    picked = [(s, t) for n, s, t in ranked[:3] if n >= minimum]
+    picked = [(s, t) for sc, n, s, t in ranked[:3] if n >= minimum and sc >= 1.2]
     if picked:
         ctx = 'RECALL (lessons related to this request; apply them and count «helped» when you close):\n' + \
               '\n'.join('- [' + s + '] ' + short(t, 300) for s, t in picked)
